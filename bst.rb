@@ -16,4 +16,13 @@ module BinarySearchTree
       @right = right
     end
   end
+
+  # This class represents the binary search tree
+  class Tree
+    attr_accessor :root
+
+    def initialize(array); end
+
+    def build_tree(array); end
+  end
 end
