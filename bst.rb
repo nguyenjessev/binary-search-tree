@@ -12,7 +12,7 @@ module BinarySearchTree
       data <=> other.data
     end
 
-    def initialize(data, left, right)
+    def initialize(data, left = nil, right = nil)
       @data = data
       @left = left
       @right = right
@@ -32,12 +32,26 @@ module BinarySearchTree
 
       nodes = array.uniq.sort
       middle = (nodes.length - 1) / 2
-      left_nodes = middle > 0 ? nodes[0..(middle - 1)] : []
+      left_nodes = middle.positive? ? nodes[0..(middle - 1)] : []
       right_nodes = nodes[(middle + 1)..-1]
 
       middle_node = Node.new(nodes[middle], build_tree(left_nodes), build_tree(right_nodes))
 
       middle_node
+    end
+
+    def insert(value, current_node = root)
+      if current_node.data > value
+        if current_node.left.nil?
+          current_node.left = Node.new(value)
+        else
+          insert(value, current_node.left)
+        end
+      elsif current_node.right.nil?
+        current_node.right = Node.new(value)
+      else
+        insert(value, current_node.right)
+      end
     end
 
     def pretty_print(node = @root, prefix = '', is_left = true)
@@ -51,6 +65,6 @@ end
 test = Array.new(15) { rand(1..100) }
 test_tree = BinarySearchTree::Tree.new(test)
 puts
-p test
+p test.uniq.sort
 puts
 test_tree.pretty_print
