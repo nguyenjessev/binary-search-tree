@@ -134,6 +134,12 @@ module BinarySearchTree
       result
     end
 
+    def height(current_node)
+      return -1 if current_node.nil?
+
+      [height(current_node.left), height(current_node.right)].max + 1
+    end
+
     def pretty_print(node = @root, prefix = '', is_left = true)
       pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
       puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
