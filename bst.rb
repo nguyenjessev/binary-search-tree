@@ -74,6 +74,14 @@ module BinarySearchTree
       find_minimum(current_node.left)
     end
 
+    def find(value, current_node = root)
+      return current_node if current_node.nil? || value == current_node.data
+
+      return find(value, current_node.right) if value > current_node.data
+
+      return find(value, current_node.left) if value < current_node.data
+    end
+
     def pretty_print(node = @root, prefix = '', is_left = true)
       pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
       puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -81,16 +89,3 @@ module BinarySearchTree
     end
   end
 end
-
-test = Array.new(15) { rand(1..100) }
-test_tree = BinarySearchTree::Tree.new(test)
-puts
-p test.uniq.sort
-puts
-test_tree.pretty_print
-puts
-5.times do
-  test_tree.insert(rand(1..100))
-end
-puts
-test_tree.pretty_print
