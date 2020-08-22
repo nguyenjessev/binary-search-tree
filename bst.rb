@@ -83,6 +83,8 @@ module BinarySearchTree
     end
 
     def level_order(current_node = root)
+      return [] if current_node.nil?
+
       queue = [current_node]
       result = []
 
@@ -92,6 +94,18 @@ module BinarySearchTree
         queue << working_node.right unless working_node.right.nil?
         result << working_node.data
       end
+
+      result
+    end
+
+    def inorder(current_node = root)
+      return [] if current_node.nil?
+
+      result = []
+
+      result.concat(inorder(current_node.left)) unless current_node.left.nil?
+      result << current_node.data
+      result.concat(inorder(current_node.right)) unless current_node.right.nil?
 
       result
     end
