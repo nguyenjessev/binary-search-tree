@@ -54,6 +54,24 @@ module BinarySearchTree
 
       current_node.left = delete(value, current_node.left) if current_node.data > value
       current_node.right = delete(value, current_node.right) if current_node.data < value
+
+      if current_node.data == value
+        return current_node.right if current_node.left.nil?
+
+        return current_node.left if current_node.right.nil?
+
+        temp = find_minimum(current_node.right)
+        current_node.right = delete(temp.data, current_node.right)
+        current_node.data = temp.data
+      end
+
+      current_node
+    end
+
+    def find_minimum(current_node)
+      return current_node if current_node.left.nil?
+
+      find_minimum(current_node.left)
     end
 
     def pretty_print(node = @root, prefix = '', is_left = true)
