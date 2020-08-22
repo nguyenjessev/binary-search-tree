@@ -110,6 +110,18 @@ module BinarySearchTree
       result
     end
 
+    def preorder(current_node = root)
+      return [] if current_node.nil?
+
+      result = []
+
+      result << current_node.data
+      result.concat(preorder(current_node.left)) unless current_node.left.nil?
+      result.concat(preorder(current_node.right)) unless current_node.right.nil?
+
+      result
+    end
+
     def pretty_print(node = @root, prefix = '', is_left = true)
       pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
       puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
