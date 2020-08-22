@@ -49,6 +49,13 @@ module BinarySearchTree
       current_node
     end
 
+    def delete(value, current_node = root)
+      return nil if current_node.nil?
+
+      current_node.left = delete(value, current_node.left) if current_node.data > value
+      current_node.right = delete(value, current_node.right) if current_node.data < value
+    end
+
     def pretty_print(node = @root, prefix = '', is_left = true)
       pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
       puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
