@@ -41,17 +41,12 @@ module BinarySearchTree
     end
 
     def insert(value, current_node = root)
-      if current_node.data > value
-        if current_node.left.nil?
-          current_node.left = Node.new(value)
-        else
-          insert(value, current_node.left)
-        end
-      elsif current_node.right.nil?
-        current_node.right = Node.new(value)
-      else
-        insert(value, current_node.right)
-      end
+      return Node.new(value) if current_node.nil?
+
+      current_node.left = insert(value, current_node.left) if current_node.data > value
+      current_node.right = insert(value, current_node.right) if current_node.data <= value
+
+      current_node
     end
 
     def pretty_print(node = @root, prefix = '', is_left = true)
@@ -66,5 +61,11 @@ test = Array.new(15) { rand(1..100) }
 test_tree = BinarySearchTree::Tree.new(test)
 puts
 p test.uniq.sort
+puts
+test_tree.pretty_print
+puts
+5.times do
+  test_tree.insert(rand(1..100))
+end
 puts
 test_tree.pretty_print
