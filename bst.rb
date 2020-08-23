@@ -140,6 +140,20 @@ module BinarySearchTree
       [height(current_node.left), height(current_node.right)].max + 1
     end
 
+    def depth(target, current_node = root)
+      return nil if current_node.nil? || target.nil?
+
+      return 0 if current_node == target
+
+      left_depth = depth(target, current_node.left)
+      return left_depth + 1 unless left_depth.nil?
+
+      right_depth = depth(target, current_node.right)
+      return right_depth + 1 unless right_depth.nil?
+
+      nil
+    end
+
     def pretty_print(node = @root, prefix = '', is_left = true)
       pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
       puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
