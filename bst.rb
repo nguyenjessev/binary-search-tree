@@ -154,6 +154,18 @@ module BinarySearchTree
       nil
     end
 
+    def balanced?(current_node = root)
+      return true if current_node.nil?
+
+      left_height = height(current_node.left)
+      right_height = height(current_node.right)
+
+      return true if balanced?(current_node.left) && balanced?(current_node.right) &&
+                     (left_height - right_height).abs <= 1
+
+      false
+    end
+
     def pretty_print(node = @root, prefix = '', is_left = true)
       pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
       puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
